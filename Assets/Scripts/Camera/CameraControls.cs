@@ -11,11 +11,10 @@ public class CameraControls : MonoBehaviour
     public float scrollSpeed;
 
     private Vector3 dragOrigin;
-    private bool dragging = false;
     public GameObject background;
     public float backgroundZ;
 
-    private Camera camera;
+    private new Camera camera;
 
     private void Start()
     {
@@ -39,6 +38,7 @@ public class CameraControls : MonoBehaviour
     }
     private void CheckMouseDrag()
     {
+        // for this system I used the excellent tutorial found here: https://pressstart.vip/tutorials/2018/11/9/78/perspective-camera-panning.html
         if (Input.GetMouseButtonDown(0))
         {
             dragOrigin = GetWorldPosition(backgroundZ);
