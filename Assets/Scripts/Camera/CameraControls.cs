@@ -5,9 +5,9 @@ using UnityEngine;
 public class CameraControls : MonoBehaviour
 {
 
-    public float cameraDistanceMax;
-    public float cameraDistanceMin;
-    private float cameraDistance;
+    public float cameraZoomMax;
+    public float cameraZoomMin;
+    private float cameraZoom;
     public float scrollSpeed;
 
     private Vector3 dragOrigin;
@@ -18,44 +18,44 @@ public class CameraControls : MonoBehaviour
 
     private void Start()
     {
-        cameraDistance = gameObject.transform.position.z;
+        cameraZoom = 5.0f;
+        Global.global.cameraZoom = cameraZoom;
         camera = gameObject.GetComponent<Camera>();
         backgroundZ = background.transform.position.z;
     }
 
-    void LateUpdate()
+    void Update()
     {
         CheckMouseDrag();
         CheckMouseScroll();
     }
 
+
+
+
+
+
+
     private void CheckMouseScroll()
     {
-        cameraDistance += Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
-        cameraDistance = Mathf.Clamp(cameraDistance, cameraDistanceMin, cameraDistanceMax);
+        cameraZoom -= Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
+        cameraZoom = Mathf.Clamp(cameraZoom, cameraZoomMin, cameraZoomMax);
 
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, cameraDistance);
+        Global.global.cameraZoom = cameraZoom;
+        camera.orthographicSize = cameraZoom;
+        //gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, cameraDistance);
     }
     private void CheckMouseDrag()
     {
         // for this system I used the excellent tutorial found here: https://pressstart.vip/tutorials/2018/11/9/78/perspective-camera-panning.html
         if (Input.GetMouseButtonDown(0))
         {
-            dragOrigin = GetWorldPosition(backgroundZ);
+            dragOrigin = camera.ScreenToWorldPoint(Input.mousePosition);
         }
         if (Input.GetMouseButton(0))
         {
-            Vector3 direction = dragOrigin - GetWorldPosition(backgroundZ);
+            Vector3 direction = dragOrigin - camera.ScreenToWorldPoint(Input.mousePosition);
             camera.transform.position += direction;
         }
-    }
-
-    private Vector3 GetWorldPosition(float z)
-    {
-        Ray mousePos = camera.ScreenPointToRay(Input.mousePosition);
-        Plane ground = new Plane(Vector3.forward, new Vector3(0, 0, z));
-        float distance;
-        ground.Raycast(mousePos, out distance);
-        return mousePos.GetPoint(distance);
     }
 }
