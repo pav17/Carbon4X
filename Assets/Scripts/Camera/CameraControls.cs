@@ -21,6 +21,7 @@ public class CameraControls : MonoBehaviour
         cameraZoom = 5.0f;
         Global.global.cameraZoom = cameraZoom;
         camera = gameObject.GetComponent<Camera>();
+        Global.global.mainCamera = camera;
         backgroundZ = background.transform.position.z;
     }
 
