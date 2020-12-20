@@ -42,7 +42,8 @@ public class CameraControls : MonoBehaviour
     }
     private void CheckMouseDrag()
     {
-        // for this system I used the excellent tutorial found here: https://pressstart.vip/tutorials/2018/11/9/78/perspective-camera-panning.html
+        // for this system I started with the excellent tutorial found here: https://pressstart.vip/tutorials/2018/11/9/78/perspective-camera-panning.html
+        //remember to raycast to the background to determine wheather to actually move camera or not
         if (Input.GetMouseButtonDown(0))
         {
             dragOrigin = camera.ScreenToWorldPoint(Input.mousePosition);
