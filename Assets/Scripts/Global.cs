@@ -11,6 +11,9 @@ public class Global : MonoBehaviour
     public Canvas mainCanvas;
     public Camera mainCamera;
 
+    public GameObject selectedFleet;
+    public GameObject selectedPlanet;
+
 
     private void Awake()
     {

@@ -31,12 +31,6 @@ public class CameraControls : MonoBehaviour
         CheckMouseScroll();
     }
 
-
-
-
-
-
-
     private void CheckMouseScroll()
     {
         cameraZoom -= Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
